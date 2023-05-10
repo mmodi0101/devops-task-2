@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: './Frontend'
+      dockerfile: Dockerfile
+    container_name: react-ui
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-stack-network
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: './Backend'
+      dockerfile: Dockerfile
+    ports:
+      - 5500:5500
+    container_name: express-container
+    networks:
+      - mern-stack-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    container_name: mongo-container
+    networks:
+      - mern-stack-network
+    
+networks:
+  mern-stack-network
